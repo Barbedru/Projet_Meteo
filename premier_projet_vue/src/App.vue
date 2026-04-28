@@ -3,17 +3,19 @@
 <template>
   <main>
     <h1>Bienvenue sur l'application Météo</h1>
-    <a href="#" @click.prevent="onListClick">Voir la liste des villes</a>
-    <CitiesList/>
+    <router-link to="/villes" >Voir la liste des villes</router-link>
+
+    <router-link to="/ville">Voir une ville </router-link>
+  <router-view></router-view>
   </main>
 </template>
 
 <script>
-import CitiesList from './views/CitiesList.vue'
+
 
 export default {
   components: {
-    CitiesList
+
   },
   methods: {
     onListClick() {
