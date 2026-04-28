@@ -9,13 +9,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      name: 'Villard-de-Lans',
-      weather: 'nuageux',
-      temperature: 16,
-      updatedAt: new Date()
-    }
-  }
+  props: ['name', 'weather', 'temperature', 'updateAt']
 }
 </script>
