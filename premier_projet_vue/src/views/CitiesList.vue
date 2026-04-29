@@ -34,7 +34,7 @@ export default {
 
   created() {            //le hook qui se déclenche quand le composant est créé
     this.loading = true  //loading passe à true au début et revient à false une fois la requête terminée
-    fetch('https://api.openweathermap.org/data/2.5/find?lat=45.758&lon=4.765&cnt=20&cluster=yes&lang=fr&units=metric&APPID=4421eef49ebf0c1cafe95c95ae1ad098')
+    fetch(`https://api.openweathermap.org/data/2.5/find?lat=45.758&lon=4.765&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${import.meta.env.VITE_API_KEY}`)
         .then(response => response.json())
         .then(data => {
           this.cities = data.list.map(city => ({   // transforme les données de l'API au format attendu par le composant City
