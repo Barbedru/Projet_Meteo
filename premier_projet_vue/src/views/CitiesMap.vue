@@ -30,7 +30,7 @@
 <script>
 // On importe les 3 composants nécessaires depuis vue-leaflet
 import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet'
-// On importe le CSS de Leaflet, obligatoire pour que la carte s'affiche correctement
+// On importe le CSS de Leaflet, pour afficher la carte
 import 'leaflet/dist/leaflet.css'
 
 export default {
@@ -44,7 +44,7 @@ export default {
     return {
       zoom: 6,                        // niveau de zoom initial (1 = monde entier, 18 = rue)
       center: [46.603354, 1.888334],  // coordonnées GPS du centre de la France
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', // URL du fond de carte OpenStreetMap
+      url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', // URL du fond de carte OpenStreetMap
       attribution: '© OpenStreetMap contributors', // crédit obligatoire OpenStreetMap
       cities: [],      // tableau vide au départ, sera rempli par l'API
       loading: false,  // false au départ, passera à true pendant la requête
