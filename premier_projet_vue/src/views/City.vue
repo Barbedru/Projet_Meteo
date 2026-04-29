@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { format, render, cancel, register } from 'timeago.js';
+import { format } from 'timeago.js';
 
 export default {
   props: ['name', 'weather', 'temperature', 'updateAt'],
