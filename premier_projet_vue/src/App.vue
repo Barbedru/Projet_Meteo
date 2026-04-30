@@ -2,12 +2,17 @@
 
 <template>
   <main>
+    <div class="banniere">
+      <img src="https://static.vecteezy.com/ti/photos-gratuite/p2/5411405-meteo-previsions-icone-sur-smartphone-banniere-arriere-plan-rendu-3d-illustration-gratuit-photo.jpg" alt="bannière météo" />
+    </div>
     <h1>Bienvenue sur l'application Météo</h1>
-    <router-link to="/villes" >Voir la liste des villes</router-link>
+    <button><router-link to="/App" >Accueil</router-link></button>
     <br>
-    <router-link to="/ville">Voir une ville </router-link>
+    <button><router-link to="/villes" >Voir la liste des villes</router-link></button>
     <br>
-    <router-link to="/carte">Map </router-link>
+<!--    <router-link to="/ville">Voir une ville </router-link>
+    <br>-->
+    <button><router-link to="/carte">Map </router-link></button>
 
   <router-view></router-view>
   </main>
@@ -18,9 +23,30 @@
 
 export default {
 
-  methods: {
-  }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+a {
+  text-decoration: none;  /* enlève le soulignement */
+  color: inherit;         /* enlève la couleur bleue du lien */
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 2rem;
+  background-color:#87CEEB;
+}
+
+.banniere img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;  /* recadre l'image sans la déformer */
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+</style>
