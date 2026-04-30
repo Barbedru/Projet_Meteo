@@ -1,15 +1,17 @@
 <template>
   <div>
     <h1>Météo - Liste des villes</h1>
+
     <p v-if="loading">Requête en cours...</p>
     <p v-if="error" style="color: red">{{ error }}</p>
-    <City
-        v-for="city in cities"
+
+    <City v-for="city in cities"
         :key="city.id"
         :name="city.name"
         :weather="city.weather"
         :temperature="city.temperature"
         :updatedAt="city.updatedAt"
+          :icon="city.icon"
     />
   </div>
 </template>
@@ -25,7 +27,7 @@ export default {
   },
   data: function() {
     return {
-      Cities: [],
+      cities: [],
       loading: false,
       error: null,
 
@@ -42,7 +44,8 @@ export default {
             name: city.name,
             weather: city.weather[0].description,
             temperature: city.main.temp,
-            updatedAt: new Date(city.dt * 1000)          //convertit le timestamp Unix en millisecondes
+            updatedAt: new Date(city.dt * 1000),
+            icon: city.weather[0].icon//convertit le timestamp Unix en millisecondes
           }))
           this.loading = false
         })

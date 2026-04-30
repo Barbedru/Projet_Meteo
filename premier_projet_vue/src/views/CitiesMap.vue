@@ -1,11 +1,8 @@
 <template>
-  <!-- Div conteneur obligatoire avec une hauteur fixe, sinon la carte ne s'affiche pas -->
+  <!-- Div conteneur avec une hauteur fixe, sinon la carte ne s'affiche pas -->
   <div style="height: 600px; width: 100%">
 
-    <!-- S'affiche uniquement si loading est true -->
     <p v-if="loading">Requête en cours...</p>
-
-    <!-- S'affiche uniquement si une erreur est survenue -->
     <p v-if="error" style="color: red">{{ error }}</p>
 
     <!-- Composant carte, zoom définit le niveau de zoom, center définit le centre de la carte -->
@@ -21,7 +18,13 @@
           v-for="city in cities"
           :key="city.id"
           :lat-lng="[city.lat, city.lon]"
-      />
+      >
+
+        <l-icon
+            :icon-url="`https://openweathermap.org/img/wn/${city.icon}@2x.png`"
+            :icon-size="[50, 50]"
+        />
+      </l-marker>
 
     </l-map>
   </div>
@@ -29,7 +32,7 @@
 
 <script>
 // On importe les 3 composants nécessaires depuis vue-leaflet
-import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet'
+import { LMap, LTileLayer, LMarker, LIcon } from '@vue-leaflet/vue-leaflet'
 // On importe le CSS de Leaflet, pour afficher la carte
 import 'leaflet/dist/leaflet.css'
 
@@ -38,7 +41,8 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LMarker
+    LMarker,
+    LIcon
   },
   data() {
     return {
@@ -67,6 +71,10 @@ export default {
           this.cities = data.list.map(city => ({
             id: city.id,          // identifiant unique de la ville
             name: city.name,      // nom de la ville
+            weather: city.weather[0].description,
+            temperature: city.main.temp,
+            updatedAt: new Date(city.dt * 1000),
+            icon: city.weather[0].icon,
             lat: city.coord.lat,  // latitude GPS (dans city.coord dans l'API)
             lon: city.coord.lon   // longitude GPS (dans city.coord dans l'API)
           }))
