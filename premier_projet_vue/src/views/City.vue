@@ -13,7 +13,7 @@ import { format } from 'timeago.js';
 
 
 export default {
-  props: ['name', 'weather', 'temperature', 'updatedAt', 'icon', 'lat', 'lon'],
+  props: ['name', 'weather', 'temperature', 'updatedAt', 'icon'],
   methods: {
     formatDate(date) {
       return format(date, 'fr')

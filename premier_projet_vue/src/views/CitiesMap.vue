@@ -31,7 +31,7 @@
 </template>
 
 <script>
-// On importe les 3 composants nécessaires depuis vue-leaflet
+// On importe les 4 composants nécessaires depuis vue-leaflet
 import { LMap, LTileLayer, LMarker, LIcon } from '@vue-leaflet/vue-leaflet'
 // On importe le CSS de Leaflet, pour afficher la carte
 import 'leaflet/dist/leaflet.css'
