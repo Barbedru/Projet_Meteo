@@ -48,7 +48,7 @@ export default {
     return {
       zoom: 6,                        // niveau de zoom initial (1 = monde entier, 18 = rue)
       center: [46.603354, 1.888334],  // coordonnées GPS du centre de la France
-      url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', // URL du fond de carte OpenStreetMap
+      url: 'https://tile.openstreetmap.bzh/ca/{z}/{x}/{y}.png', // URL du fond de carte OpenStreetMap
       attribution: '© OpenStreetMap contributors', // crédit obligatoire OpenStreetMap
       cities: [],      // tableau vide au départ, sera rempli par l'API
       loading: false,  // false au départ, passera à true pendant la requête
@@ -60,31 +60,38 @@ export default {
     this.loading = true  // on active le message "Requête en cours..."
 
     // on appelle l'API OpenWeatherMap avec la clé stockée dans .env
-    fetch(`https://api.openweathermap.org/data/2.5/find?lat=45.758&lon=4.765&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${import.meta.env.VITE_API_KEY}`)
+    const url1 = `https://api.openweathermap.org/data/2.5/find?lat=50.289086&lon=3.615037&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${import.meta.env.VITE_API_KEY}`
+    const url2 = `https://api.openweathermap.org/data/2.5/find?lat=50.357113&lon=3.518332&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${import.meta.env.VITE_API_KEY}`
+    const url3 = `https://api.openweathermap.org/data/2.5/find?lat=48.186198&lon=-3.812634&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${import.meta.env.VITE_API_KEY}`
+    const url4 = `https://api.openweathermap.org/data/2.5/find?lat=48.410006&lon=-1.752499&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${import.meta.env.VITE_API_KEY}`
+    const url5 = `https://api.openweathermap.org/data/2.5/find?lat=45.070814&lon=5.550499&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${import.meta.env.VITE_API_KEY}`
 
-        // on convertit la réponse HTTP en objet JavaScript
-        .then(response => response.json())
-
-        .then(data => {
-          // data.list contient le tableau des villes retournées par l'API
-          // on le transforme pour ne garder que les infos dont on a besoin
-          this.cities = data.list.map(city => ({
-            id: city.id,          // identifiant unique de la ville
-            name: city.name,      // nom de la ville
+    Promise.all([fetch(url1), fetch(url2), fetch(url3), fetch(url4), fetch(url5)])
+        .then(([res1, res2, res3, res4, res5]) => Promise.all([res1.json(), res2.json(), res3.json(), res4.json(), res5.json()]))
+        .then(([data1, data2, data3, data4, data5]) => {
+          const mapCity = city => ({
+            id: city.id,
+            name: city.name,
             weather: city.weather[0].description,
             temperature: city.main.temp,
             updatedAt: new Date(city.dt * 1000),
             icon: city.weather[0].icon,
-            lat: city.coord.lat,  // latitude GPS (dans city.coord dans l'API)
-            lon: city.coord.lon   // longitude GPS (dans city.coord dans l'API)
-          }))
-          this.loading = false  // on désactive le message "Requête en cours..."
-        })
+            lat: city.coord.lat,
+            lon: city.coord.lon
+          })
 
-        // si la requête échoue, on stocke le message d'erreur
+          this.cities = [
+            ...data1.list.map(mapCity),
+            ...data2.list.map(mapCity),
+            ...data3.list.map(mapCity),
+            ...data4.list.map(mapCity),
+            ...data5.list.map(mapCity),
+          ]
+          this.loading = false
+        })
         .catch(err => {
-          this.error = err.message  // affiche le message d'erreur dans le template
-          this.loading = false      // on désactive le message "Requête en cours..."
+          this.error = err.message
+          this.loading = false    // on désactive le message "Requête en cours..."
         })
   }
 }

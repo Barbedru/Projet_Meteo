@@ -20,12 +20,8 @@
 
 <script>
 
-
 export default {
-
 }
-
-
 
 </script>
 
